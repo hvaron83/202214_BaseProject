@@ -1,0 +1,624 @@
+{
+	"info": {
+		"_postman_id": "96862282-ebcd-4add-bc97-63cf2b852276",
+		"name": "Socios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22977479"
+	},
+	"item": [
+		{
+			"name": "Agregar un socio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"socio_id\", data.id);\r",
+							"\r",
+							"pm.test(\"Codigo de estado es 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombreUsuario\": \"pauespinosa\",\r\n  \"correoElectronico\": \"mpv@mail.com\",\r\n  \"fechaNacimiento\": \"15-9-2008\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/socios",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"socios"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Agregar un socio",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/socios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"socios"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"nombreUsuario\": \"hvaron\",\r\n    \"correoElectronico\": \"h.varon@uniandes.edu.co\",\r\n    \"fechaNacimiento\": \"18/9/2000\",\r\n    \"id\": \"b16ecfc9-9f43-4746-b0af-41af8c432307\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Agregar un socio no valido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 412\", function () {\r",
+							"   pm.response.to.have.status(412);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Obtener mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El correo del socio no es valido\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombreUsuario\": \"hvaron\",\r\n  \"correoElectronico\": \"pedroperezgmail.com\",\r\n  \"fechaNacimiento\": \"22/8/2010\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/socios",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"socios"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Agregar un socio no valido",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/socios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"socios"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"statusCode\": 404,\r\n    \"message\": \"El correo del socio no es valido\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener todos los socios",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Numero de socios > ' + 0, function () {\r",
+							"   var data = pm.response.json()\r",
+							"   pm.expect(data.length).to.greaterThan(0)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Codigo de estado es 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/socios",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"socios"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener todos los socios",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/socios",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"socios"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "[\r\n    {\r\n        \"id\": \"b16ecfc9-9f43-4746-b0af-41af8c432307\",\r\n        \"nombreUsuario\": \"hvaron\",\r\n        \"correoElectronico\": \"h.varon@uniandes.edu.co\",\r\n        \"fechaNacimiento\": null,\r\n        \"clubs\": []\r\n    },\r\n    {\r\n        \"id\": \"5cb9ac06-0432-4b23-a9a5-1ae5c00c8e66\",\r\n        \"nombreUsuario\": \"pcasticllo\",\r\n        \"correoElectronico\": \"paocas@mail.co\",\r\n        \"fechaNacimiento\": null,\r\n        \"clubs\": []\r\n    },\r\n    {\r\n        \"id\": \"b96091a5-d719-4b4a-b2d3-6c05fd30fe63\",\r\n        \"nombreUsuario\": \"pauespinosa\",\r\n        \"correoElectronico\": \"mpv@mail.com\",\r\n        \"fechaNacimiento\": null,\r\n        \"clubs\": []\r\n    }\r\n]"
+				}
+			]
+		},
+		{
+			"name": "Obtener un socio por id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/socios/{{socio_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"socios",
+						"{{socio_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener un socio por id",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/socios/{{socio_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"socios",
+								"{{socio_id}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"id\": \"b16ecfc9-9f43-4746-b0af-41af8c432307\",\r\n    \"nombreUsuario\": \"hvaron\",\r\n    \"correoElectronico\": \"h.varon@uniandes.edu.co\",\r\n    \"fechaNacimiento\": null,\r\n    \"clubs\": []\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Obtener un socio por id que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Obtener mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El socio con el id dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/socios/{{socio_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"socios",
+						"{{socio_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Obtener un socio por id que no existe",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/socios/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"socios",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"statusCode\": 404,\r\n    \"message\": \"El socio con el id dado no fue encontrado\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar un socio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 200\", function () {\r",
+							"   pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombreUsuario\": \"Jessica\",\r\n  \"correoElectronico\": \"jpv@mail.com\",\r\n  \"fechaNacimiento\": \"15-9-2008\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/socios/{{socios_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"socios",
+						"{{socios_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar un socio",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombreUsuario\": \"Jessica\",\r\n  \"correoElectronico\": \"jpv@mail.com\",\r\n  \"fechaNacimiento\": \"15-9-2008\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/socios/{{socio_id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"socios",
+								"{{socio_id}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"id\": \"b96091a5-d719-4b4a-b2d3-6c05fd30fe63\",\r\n    \"nombreUsuario\": \"Jessica\",\r\n    \"correoElectronico\": \"jpv@mail.com\",\r\n    \"fechaNacimiento\": \"15-9-2008\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Actualizar un socio que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Obtener mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El socio con el id dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombreUsuario\": \"Jessica\",\r\n  \"correoElectronico\": \"jpv@mail.com\",\r\n  \"fechaNacimiento\": \"15-9-2008\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/socios/{{socios_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"socios",
+						"{{socios_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Actualizar un socio que no existe",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombreUsuario\": \"Jessica\",\r\n  \"correoElectronico\": \"jpv@mail.com\",\r\n  \"fechaNacimiento\": \"15-9-2008\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/socios/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"socios",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"statusCode\": 404,\r\n    \"message\": \"El socio con el id dado no fue encontrado\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Borrar un socio",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 204\", function () {\r",
+							"   pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/socios/{{socio_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"socios",
+						"{{socio_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar un socio",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/socios/b16ecfc9-9f43-4746-b0af-41af8c432307",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"socios",
+								"b16ecfc9-9f43-4746-b0af-41af8c432307"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Borrar un socio que no existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Codigo de estado es 404\", function () {\r",
+							"   pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Obtener mensaje de error esperado\", function () {\r",
+							"   var data = pm.response.json();\r",
+							"   pm.expect(data.message).to.eql(\"El socio con el id dado no fue encontrado\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/socios/{{socio_id}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"socios",
+						"{{socio_id}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Borrar un socio que no existe",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/socios/b16ecfc9-9f43-4746-b0af-41af8c432307",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"socios",
+								"b16ecfc9-9f43-4746-b0af-41af8c432307"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"statusCode\": 404,\r\n    \"message\": \"El socio con el id dado no fue encontrado\"\r\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api/v1",
+			"type": "string"
+		}
+	]
+}
